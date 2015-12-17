@@ -1,0 +1,28 @@
+#!/bin/sh
+
+usage() {
+    echo "Usage: template template directory" >&2
+}
+
+if [ $# -ne 2 ]; then
+    usage
+    exit 1
+fi
+
+templates="$HOME/Vorlagen"
+
+template="$templates/$1"
+directory="$2"
+
+if [ -d "$directory" ]; then
+    echo ">$directory< exists" >&2
+    exit 1
+fi
+
+if [ ! -d "$template" ]; then
+    echo "Unknown template >$2<" >&2
+    exit 2
+fi
+
+cp -r "$template" "$directory"
+chmod +w "$directory"/* "$directory"/.*
